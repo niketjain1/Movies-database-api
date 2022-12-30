@@ -1,4 +1,4 @@
-package com.example.Movie;
+package com.Project.Movie;
 import java.util.*;
 public interface MovieService {
     List<MovieEntity> getAllMovies();
