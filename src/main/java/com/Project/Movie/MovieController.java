@@ -1,4 +1,4 @@
-package com.example.Movie;
+package com.Project.Movie;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import java.util.List;
 public class MovieController {
     private final MovieRepository movieRepository;
     @Autowired
-    private final MovieServiceImpl movieService;
+    private final MovieService movieService;
 
     public MovieController(MovieRepository movieRepository, MovieServiceImpl movieService){
         this.movieRepository = movieRepository;
