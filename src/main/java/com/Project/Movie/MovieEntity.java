@@ -26,6 +26,10 @@ public class MovieEntity {
     @Column(name = "Rating")
     private double rating;
 
+    public MovieEntity(String title, double rating){
+        this.title = title;
+        this.rating = rating;
+    }
 
     public MovieEntity(long id, String title, LocalDate releaseDate, String genre, double rating){}
 
