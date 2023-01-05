@@ -1,9 +1,13 @@
 package com.Project.Movie;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
 
 @Service
 public class MovieServiceImpl implements MovieService{
@@ -31,7 +35,7 @@ public class MovieServiceImpl implements MovieService{
     public MovieEntity updateMovie(Long id, MovieEntity movie) {
         MovieEntity existingMovie = movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
         existingMovie.setTitle(movie.getTitle());
-        existingMovie.setReleaseDate(movie.getReleaseDate());
+        existingMovie.setReleaseYear(movie.getReleaseYear());
         existingMovie.setGenre(movie.getGenre());
         existingMovie.setRating(movie.getRating());
         return movieRepository.save(existingMovie);
