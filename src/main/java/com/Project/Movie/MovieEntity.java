@@ -16,11 +16,11 @@ import java.util.List;
 public class MovieEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private int id;
     @Column(nullable = false)
     private String title;
-    @Column(name = "Release_Date", columnDefinition = "Date")
-    private LocalDate releaseDate;
+    @Column(name = "Release_Date")
+    private int releaseYear;
     @Column(name = "Genre")
     private String genre;
     @Column(name = "Rating")
@@ -36,10 +36,10 @@ public class MovieEntity {
 
 
     public MovieEntity(){}
-    public MovieEntity(Long id, String title, LocalDate releaseDate, String genre, double rating){
+    public MovieEntity(int id, String title, int releaseYear, String genre, double rating){
         this.id = id;
         this.title = title;
-        this.releaseDate = releaseDate;
+        this.releaseYear = releaseYear;
         this.genre = genre;
         this.rating = rating;
     }

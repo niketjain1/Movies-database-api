@@ -10,12 +10,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/movies")
 public class MovieController {
-    private final MovieRepository movieRepository;
+
     @Autowired
     private final MovieService movieService;
 
-    public MovieController(MovieRepository movieRepository, MovieServiceImpl movieService){
-        this.movieRepository = movieRepository;
+    public MovieController(MovieService movieService){
         this.movieService = movieService;
     }
 
