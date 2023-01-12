@@ -1,5 +1,6 @@
 package com.Project.Movie.users;
 
+import com.Project.Movie.security.AuthTokenService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,17 +11,23 @@ public class UserService {
     private UserRepository userRepository;
     private ModelMapper modelMapper;
     private PasswordEncoder passwordEncoder;
+    private AuthTokenService authTokenService;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, AuthTokenService authTokenService) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
+        this.authTokenService = authTokenService;
     }
 
     public UserResponseDto createUser(CreateUserDto request){
-        UserEntity user = modelMapper.map(request, UserEntity.class);
+        var user = modelMapper.map(request, UserEntity.class);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        return modelMapper.map(userRepository.save(user), UserResponseDto.class);
+        var savedUser = userRepository.save(user);
+        var response = modelMapper.map(savedUser, UserResponseDto.class);
+        var token = authTokenService.createToken(savedUser);
+        response.setToken(token);
+        return response;
     }
 
     public UserResponseDto verifyUser(LoginUserDto request){
@@ -31,6 +38,9 @@ public class UserService {
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){
             throw new RuntimeException("Invalid Password");
         }
-        return modelMapper.map(user, UserResponseDto.class);
+
+        var response = modelMapper.map(user, UserResponseDto.class);
+        response.setToken(authTokenService.createToken(user));
+        return response;
     }
 }
