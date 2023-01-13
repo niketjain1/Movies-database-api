@@ -1,4 +1,4 @@
-package com.Project.Movie.security;
+package com.Project.Movie.security.authtoken;
 
 import com.Project.Movie.users.UserEntity;
 import lombok.AllArgsConstructor;

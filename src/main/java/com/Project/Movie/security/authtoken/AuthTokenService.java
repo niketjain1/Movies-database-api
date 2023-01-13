@@ -1,9 +1,7 @@
-package com.Project.Movie.security;
+package com.Project.Movie.security.authtoken;
 
 import com.Project.Movie.users.UserEntity;
 import com.Project.Movie.users.UserRepository;
-import com.Project.Movie.users.UserResponseDto;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 @Service

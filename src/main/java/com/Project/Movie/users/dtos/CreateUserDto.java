@@ -1,4 +1,4 @@
-package com.Project.Movie.users;
+package com.Project.Movie.users.dtos;
 
 import lombok.Data;
 
