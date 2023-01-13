@@ -1,8 +1,10 @@
 package com.Project.Movie.Movie;
 
+import com.Project.Movie.users.dtos.UserResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +21,12 @@ public class MovieController {
     }
 
     @GetMapping
-    public List<MovieEntity> getAllMovies(){
+    public List<MovieEntity> getAllMovies(@AuthenticationPrincipal UserResponseDto user){
         return movieService.getAllMovies();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MovieEntity> getMovieById(@PathVariable Long id) {
+    public ResponseEntity<MovieEntity> getMovieById(@AuthenticationPrincipal UserResponseDto user, @PathVariable int id) {
         try {
             MovieEntity movie = movieService.getMovieById(id);
             return ResponseEntity.ok(movie);
@@ -39,11 +41,11 @@ public class MovieController {
     }
 
     @PutMapping("/{id}")
-    public MovieEntity updateMovie(@PathVariable Long id, @RequestBody MovieEntity movie) throws MovieNotFoundException {
+    public MovieEntity updateMovie(@PathVariable int id, @RequestBody MovieEntity movie) throws MovieNotFoundException {
         return movieService.updateMovie(id, movie);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMovie(@PathVariable Long id) throws MovieNotFoundException{
+    public ResponseEntity<Void> deleteMovie(@PathVariable int id) throws MovieNotFoundException{
        movieService.deleteMovie(id);
        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -2,8 +2,8 @@ package com.Project.Movie.Movie;
 import java.util.*;
 public interface MovieService {
     List<MovieEntity> getAllMovies();
-    MovieEntity getMovieById(Long id) throws MovieNotFoundException;
+    MovieEntity getMovieById(int id) throws MovieNotFoundException;
     MovieEntity createMovie(MovieEntity movie);
-    MovieEntity updateMovie(Long id, MovieEntity movie) throws MovieNotFoundException;
-    void deleteMovie(Long id) throws MovieNotFoundException;
+    MovieEntity updateMovie(int id, MovieEntity movie) throws MovieNotFoundException;
+    void deleteMovie(int id) throws MovieNotFoundException;
 }

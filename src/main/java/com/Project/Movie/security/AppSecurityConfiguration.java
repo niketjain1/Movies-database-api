@@ -32,13 +32,14 @@ public class AppSecurityConfiguration {
                 )
         );
     }
-    
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         // TODO: in prod, cors and csrf shouldn't be blanket disabled
         http.cors().disable().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/about").permitAll()
+//                .antMatchers("/movies").permitAll()
                 .antMatchers(HttpMethod.POST, "/users", "/users/login").permitAll()
                 .antMatchers("/*/**").authenticated()
                 .and()

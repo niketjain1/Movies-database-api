@@ -11,7 +11,10 @@ public class JwtService {
     public static final String SECRET = "askdjfls2342jwhbr2jh3br2h3";
     Algorithm algorithm = Algorithm.HMAC256(SECRET);
     public String createJwt(String username){
-        return JWT.create()
+        if(username == null) {
+            throw new IllegalArgumentException("Cannot create JWT token for a null user");
+        }
+            return JWT.create()
                 .withSubject(username)
                 .withIssuedAt(new Date())
                 .sign(algorithm);
