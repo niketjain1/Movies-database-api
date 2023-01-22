@@ -6,4 +6,6 @@ public interface MovieService {
     MovieEntity createMovie(MovieEntity movie);
     MovieEntity updateMovie(int id, MovieEntity movie) throws MovieNotFoundException;
     void deleteMovie(int id) throws MovieNotFoundException;
+
+    List<MovieEntity> getAllMoviesByUserid(int id);
 }

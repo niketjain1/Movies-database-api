@@ -37,7 +37,7 @@ public class MovieControllerIntegrationTest {
     @Test
     public void whenPostMovie_thenCreateMovie() throws Exception{
 
-        MovieEntity it = new MovieEntity(21, "It", 2019, "Horror", 8.4d);
+        MovieEntity it = new MovieEntity("It", 2019, "Horror", 8.4d);
         given(movieService.createMovie(Mockito.any())).willReturn(it);
 
         mvc.perform(post("/movies/01")
@@ -55,8 +55,8 @@ public class MovieControllerIntegrationTest {
     @Test
     public void givenMovies_whenGetMovies_thenReturnJsonArray() throws Exception {
 
-        MovieEntity it = new MovieEntity(21, "It", 2019, "Horror", 8.4d);
-        MovieEntity bee = new MovieEntity(22, "Bee", 2022, "Comedy", 9.1d);
+        MovieEntity it = new MovieEntity("It", 2019, "Horror", 8.4d);
+        MovieEntity bee = new MovieEntity("Bee", 2022, "Comedy", 9.1d);
 
 //        MovieEntity it = new MovieEntity("It", 8.4d);
 //        MovieEntity bee = new MovieEntity("Bee", 8.8d);

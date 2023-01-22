@@ -34,8 +34,11 @@ public class MovieController {
             return ResponseEntity.notFound().build();
         }
     }
-
-    @PostMapping("/{id}")
+    @GetMapping("/all")
+    public List<MovieEntity> getAllMoviesByUserId(@PathVariable int id){
+        return movieService.getAllMoviesByUserid(id);
+    }
+    @PostMapping
     public MovieEntity createMovie(@RequestBody MovieEntity movie){
         return movieService.createMovie(movie);
     }
@@ -49,4 +52,5 @@ public class MovieController {
        movieService.deleteMovie(id);
        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 }
