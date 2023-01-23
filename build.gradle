@@ -26,6 +26,7 @@ dependencies {
 	implementation 'org.json:json:20180130'
 	compileOnly 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework:spring-orm:5.3.5'
 
 	implementation 'org.modelmapper:modelmapper:3.0.0'
 	implementation 'com.auth0:java-jwt:4.2.1'

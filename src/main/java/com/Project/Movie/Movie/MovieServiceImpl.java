@@ -1,5 +1,6 @@
 package com.Project.Movie.Movie;
 
+import com.Project.Movie.users.UserEntity;
 import com.Project.Movie.users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,14 @@ public class MovieServiceImpl implements MovieService{
         return movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
     }
     @Override
-    public MovieEntity createMovie(MovieEntity movie) {
-        return movieRepository.save(movie);
+    public MovieEntity createMovie(MovieEntity movie){
+        UserEntity user = userRepository.findByUsername(movie.getUser().getUsername());
+        if(user != null){
+            movie.setUser(user);
+            return movieRepository.save(movie);
+        }else{
+            throw new RuntimeException("User not found");
+        }
     }
     @Override
     public MovieEntity updateMovie(int id, MovieEntity movie) {

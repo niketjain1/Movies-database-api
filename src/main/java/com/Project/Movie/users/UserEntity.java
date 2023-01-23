@@ -36,7 +36,7 @@ public class UserEntity {
         this.password = password;
     }
 
-    @OneToMany(cascade = CascadeType.ALL,
+    @OneToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL,
             mappedBy = "user")
     private List<MovieEntity> movies = new ArrayList<>();
 }

@@ -31,14 +31,13 @@ public class MovieEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    public MovieEntity(int id, String title, int releaseYear, String genre, double rating, UserEntity user) {
+    public MovieEntity(int id, String title, int releaseYear, String genre, double rating) {
         super();
         this.id = id;
         this.title = title;
         this.releaseYear = releaseYear;
         this.genre = genre;
         this.rating = rating;
-        this.user = user;
     }
     public MovieEntity(){super();}
 }

@@ -39,8 +39,12 @@ public class MovieController {
         return movieService.getAllMoviesByUserid(id);
     }
     @PostMapping
-    public MovieEntity createMovie(@RequestBody MovieEntity movie){
-        return movieService.createMovie(movie);
+    public ResponseEntity<MovieEntity> createMovie(@RequestBody MovieEntity movie){
+        try{
+            return new ResponseEntity<>(movieService.createMovie(movie), HttpStatus.CREATED);
+        }catch(RuntimeException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{id}")
