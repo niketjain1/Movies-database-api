@@ -14,18 +14,19 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name = "Users")
+@Entity
+@Table(name = "users")
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "user_id", unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "Id", unique = true, nullable = false)
     private int id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String password;
 
     public UserEntity(int id, String username, String email, String password) {
@@ -36,7 +37,7 @@ public class UserEntity {
         this.password = password;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL,
+    @OneToMany(targetEntity = MovieEntity.class,  cascade = CascadeType.ALL,
             mappedBy = "user")
-    private List<MovieEntity> movies = new ArrayList<>();
+    private List<MovieEntity> movies;
 }

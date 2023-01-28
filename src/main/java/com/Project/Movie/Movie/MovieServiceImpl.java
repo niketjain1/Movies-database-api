@@ -3,6 +3,7 @@ package com.Project.Movie.Movie;
 import com.Project.Movie.users.UserEntity;
 import com.Project.Movie.users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,13 +30,13 @@ public class MovieServiceImpl implements MovieService{
         return movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
     }
     @Override
-    public MovieEntity createMovie(MovieEntity movie){
-        UserEntity user = userRepository.findByUsername(movie.getUser().getUsername());
+    public MovieEntity createMovie(MovieEntity movie, int id){
+        var user = userRepository.findById(id).orElse(null);
         if(user != null){
             movie.setUser(user);
             return movieRepository.save(movie);
         }else{
-            throw new RuntimeException("User not found");
+            throw new RuntimeException("User not found by user id:" + id);
         }
     }
     @Override
@@ -54,8 +55,7 @@ public class MovieServiceImpl implements MovieService{
     }
 
     @Override
-    public List<MovieEntity> getAllMoviesByUserid(int id) {
-        MovieEntity movie = movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
-        return movieRepository.findByUserId(id);
+    public List<MovieEntity> findAllMoviesByUserid(int userId) {
+        return movieRepository.findByUserId(userId);
     }
 }
