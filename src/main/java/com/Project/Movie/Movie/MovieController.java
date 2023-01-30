@@ -22,14 +22,15 @@ public class MovieController {
     }
 
 
-    @GetMapping("/{userId}/movie")
-    public List<MovieEntity> getAllMoviesByUserId(@AuthenticationPrincipal UserResponseDto user, @PathVariable("userId") int userId){
-        System.out.println("hi");
+    @GetMapping("/find/movie")
+    public List<MovieEntity> getAllMoviesByUserId(@AuthenticationPrincipal UserResponseDto user){
+        int userId = user.getId();
         return movieService.findAllMoviesByUserid(userId);
     }
 
-    @PostMapping("/{userId}/movie")
-    public ResponseEntity<MovieEntity> createMovie(@AuthenticationPrincipal UserResponseDto user, @RequestBody MovieEntity movie, @PathVariable("userId") int userId){
+    @PostMapping("/create/movie")
+    public ResponseEntity<MovieEntity> createMovie(@AuthenticationPrincipal UserResponseDto user, @RequestBody MovieEntity movie){
+        int userId = user.getId();
         var savedMovie = movieService.createMovie(movie, userId);
         return ResponseEntity.created(URI.create("/users/" + savedMovie.getId() +"/movie/")).body(savedMovie);
     }
