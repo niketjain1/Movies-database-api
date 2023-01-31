@@ -11,7 +11,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/movie")
 public class MovieController {
 
     @Autowired
@@ -22,13 +22,13 @@ public class MovieController {
     }
 
 
-    @GetMapping("/find/movie")
+    @GetMapping("")
     public List<MovieEntity> getAllMoviesByUserId(@AuthenticationPrincipal UserResponseDto user){
         int userId = user.getId();
         return movieService.findAllMoviesByUserid(userId);
     }
 
-    @PostMapping("/create/movie")
+    @PostMapping("")
     public ResponseEntity<MovieEntity> createMovie(@AuthenticationPrincipal UserResponseDto user, @RequestBody MovieEntity movie){
         int userId = user.getId();
         var savedMovie = movieService.createMovie(movie, userId);
