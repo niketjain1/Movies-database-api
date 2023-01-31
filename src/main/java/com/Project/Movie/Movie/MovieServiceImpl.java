@@ -1,13 +1,12 @@
-package com.Project.Movie;
+package com.Project.Movie.Movie;
 
+import com.Project.Movie.users.UserEntity;
+import com.Project.Movie.users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static org.springframework.http.HttpStatus.CREATED;
 
 @Service
 public class MovieServiceImpl implements MovieService{
@@ -15,8 +14,11 @@ public class MovieServiceImpl implements MovieService{
     private final MovieRepository movieRepository;
 
     @Autowired
-    public MovieServiceImpl(MovieRepository movieRepository) {
+    private final UserRepository userRepository;
+
+    public MovieServiceImpl(MovieRepository movieRepository, UserRepository userRepository) {
         this.movieRepository = movieRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -24,15 +26,21 @@ public class MovieServiceImpl implements MovieService{
         return (List<MovieEntity>) movieRepository.findAll();
     }
     @Override
-    public MovieEntity getMovieById(Long id) {
+    public MovieEntity getMovieById(int id) {
         return movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
     }
     @Override
-    public MovieEntity createMovie(MovieEntity movie) {
-        return movieRepository.save(movie);
+    public MovieEntity createMovie(MovieEntity movie, int id){
+        var user = userRepository.findById(id).orElse(null);
+        if(user != null){
+            movie.setUser(user);
+            return movieRepository.save(movie);
+        }else{
+            throw new RuntimeException("User not found by user id:" + id);
+        }
     }
     @Override
-    public MovieEntity updateMovie(Long id, MovieEntity movie) {
+    public MovieEntity updateMovie(int id, MovieEntity movie) {
         MovieEntity existingMovie = movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
         existingMovie.setTitle(movie.getTitle());
         existingMovie.setReleaseYear(movie.getReleaseYear());
@@ -41,8 +49,13 @@ public class MovieServiceImpl implements MovieService{
         return movieRepository.save(existingMovie);
     }
 
-    public void deleteMovie(Long id) {
+    public void deleteMovie(int id) {
         MovieEntity movie = movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
         movieRepository.deleteById(id);
+    }
+
+    @Override
+    public List<MovieEntity> findAllMoviesByUserid(int userId) {
+        return movieRepository.findByUserId(userId);
     }
 }
